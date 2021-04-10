@@ -144,7 +144,7 @@ bool EmissionTable__forbid(struct EmissionTable* self, Literal sequence[]) {
  * Recursively check for Ns in query and replace them by A,C,T,G while recording those in visited.
  */
 void EmissionTable__variants(uint16_t num_literals, Literal query[num_literals], uint16_t position, bool visited[]) {
-  if (g_loglevel >= 6) {
+  if (LOGLEVEL >= 6) {
     char tmp[4] = "";
     Literal__str(num_literals, query, tmp);
     logv(7, "Variants? %s[%u/%u]", tmp, position, num_literals);
@@ -185,7 +185,7 @@ LOGODD_T EmissionTable__by_literals(struct EmissionTable* self, Literal referenc
     EMISSION_ID_T row = Literal__uint(self->num_literals, reference);
     EMISSION_ID_T column = Literal__uint(self->num_literals, query);
 
-    if (g_loglevel >= 6) {
+    if (LOGLEVEL >= 6) {
       char ref[5] = "";
       char qry[5] = "";
       Literal__str(self->num_literals, reference, ref);

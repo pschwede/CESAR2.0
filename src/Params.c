@@ -313,7 +313,7 @@ bool Params__recalculate(struct Params* self) {
   EmissionTable__read(self->emission_table_61_LAMBDA, self->eth_file);
   Params__make_insert_table(self, self->emission_table_61_LAMBDA);
 
-  if (g_loglevel > 3) {
+  if (LOGLEVEL > 3) {
     FILE* matrix_log = fopen("cesar_matrix.2.log", "w");
     char tmp[1024000] = "";
     EmissionTable__str(self->emission_table_64_LAMBDA, tmp);

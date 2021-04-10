@@ -27,7 +27,7 @@ bool State__init(struct State* self, char name[STATE_NAME_LENGTH], uint16_t num_
   strncpy(self->name, name, STATE_NAME_LENGTH-1);
   self->name[STATE_NAME_LENGTH-1] = '\0';
 
-  if (g_loglevel >= 5) {
+  if (LOGLEVEL >= 5) {
     char tmp[4] = "";
     Literal__str(num_emissions, emission_reference, tmp);
     logv(5, SID"\tref=%s\t%s(%i)", self->id, tmp, name, num_emissions);

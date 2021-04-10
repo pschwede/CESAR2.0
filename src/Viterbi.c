@@ -145,7 +145,7 @@ void Viterbi__step(struct LogoddMatrix* vmatrix, struct PathMatrix* pmatrix, str
       LOGODD_T emission_logodd = Viterbi__get_emission_logodd(observations, t, state);
       
       char ref[4] = "", qry[4] = "";
-      if (g_loglevel > 5) {
+      if (LOGLEVEL > 5) {
         Literal__str(state->num_emissions, state->reference, ref);
         Literal__str(state->num_emissions, &observations[t-state->num_emissions], qry);
         logv(6, "t=%lu\ti=%s="SID"\tqry=%s=%i\tref=%s=%i\temission_logodd=%E",
@@ -156,9 +156,7 @@ void Viterbi__step(struct LogoddMatrix* vmatrix, struct PathMatrix* pmatrix, str
       }
 
       if (state->num_emissions > 0 && emission_logodd == LOGODD_NEGINF) {
-        if (g_loglevel > 5) {
-          logv(6, "t=%lu\ti=%s="SID"\tCurrent state cannot emit observation\t%s:\t%E", t, state->name, i, qry, emission_logodd);
-        }
+        logv(6, "t=%lu\ti=%s="SID"\tCurrent state cannot emit observation\t%s:\t%E", t, state->name, i, qry, emission_logodd);
         continue;
       }
 
@@ -237,19 +235,19 @@ void Viterbi__step(struct LogoddMatrix* vmatrix, struct PathMatrix* pmatrix, str
  */
 void Viterbi(struct HMM* hmm, size_t num_observations, Literal* observations, size_t* path_length, struct State** path) {
   if (num_observations == 0) {
-    die("No observations.");
+    return; //die("No observations.");
   }
 
   // Running viterbi on an HMM without any states will return an empty list of states.
   // The same is the case if the HMM has no start or end states.
   if (hmm->num_states == 0) {
-    die("HMM is empty.");
+    return; //die("HMM is empty.");
   }
   if (hmm->num_starts == 0 ) {
-    die("HMM has zero start states.");
+    return; //die("HMM has zero start states.");
   }
   if (hmm->num_ends == 0) {
-    die("HMM has zero end states.");
+    return; //die("HMM has zero end states.");
   }
 
   logv(1, "Num states:\t%lu", hmm->num_states);
@@ -269,7 +267,7 @@ void Viterbi(struct HMM* hmm, size_t num_observations, Literal* observations, si
     Viterbi__step(vmatrix, pmatrix, hmm, observations, t);
   }  // O(deg+(k) * S * T) = O(S * T)
 
-  if (g_loglevel > 3) {
+  if (LOGLEVEL > 3) {
     if (hmm->num_states < 200 && num_observations < 300) {
       char tmp[1024000] = "";
       FILE * matrixlog = fopen("cesar_matrix.log", "w");
@@ -327,7 +325,7 @@ void Viterbi(struct HMM* hmm, size_t num_observations, Literal* observations, si
     struct State* state = path[i];
     path[i-1] = &hmm->states[PathMatrix__get(pmatrix, t, state->id)];
 
-    if (g_loglevel >= 4) {
+    if (LOGLEVEL >= 4) {
       char qry[4] = "", ref[4] = "";
       Literal__str(state->num_emissions, &observations[t-state->num_emissions], qry);
       Literal__str(state->num_emissions, state->reference, ref);

@@ -83,8 +83,8 @@ bool Arguments__read(int argc, char** argv, struct Params* parameters) {
       Params__set_via_str(parameters, "clade", argv[++i]);
     } else if (!strcmp(argument, "-m")  || !strcmp(argument, "--matrix")) {
       Params__set_via_str(parameters, "eth_file", argv[++i]);
-    } else if (!strcmp(argument, "-v")  || !strcmp(argument, "--verbosity")) {
-      g_loglevel = (char) atoi(argv[++i]);
+    /*} else if (!strcmp(argument, "-v")  || !strcmp(argument, "--verbosity")) {
+      g_loglevel = (char) atoi(argv[++i]);*/
     } else if (!strcmp(argument, "-p")  || !strcmp(argument, "--profiles")) {
       Params__set_via_str(parameters, "acc_profile", argv[++i]);
       Params__set_via_str(parameters, "do_profile", argv[++i]);

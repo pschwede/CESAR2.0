@@ -21,16 +21,18 @@
 
 #define FAIL_EXIT 1
 
-extern char g_loglevel;
-
 #define warn(format, ...)\
   fprintf(stderr, "WARNING! %s:%d %s():\t" format "\n", __FILE__, __LINE__, __func__, ##__VA_ARGS__);\
 
 /** logv prints to stderr if given level exceeds LOGLEVEL
  * http://stackoverflow.com/questions/1644868/c-define-macro-for-debug-printing
  */
-#define logv(level, format, ...) if (level <= g_loglevel)\
-  fprintf(stderr, "VERBOSE%i %s:%d %s():\t" format "\n", level, __FILE__, __LINE__, __func__, ##__VA_ARGS__);\
+#if (LOGLEVEL >= 1)
+#define logv(level, format, ...) \
+  fprintf(stderr, "VERBOSE%i %s:%d %s():\t" format "\n", level, __FILE__, __LINE__, __func__, ##__VA_ARGS__);
+#else
+#define logv(level, format, ...);
+#endif
 
 /**
  * Kill the program after printing some information to stderr.

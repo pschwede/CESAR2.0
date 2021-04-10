@@ -6,7 +6,7 @@ VERSION=-DVERSION="\"$(shell git log -n1 --pretty=format:%h%d) added cd_acc/do\"
 
 #CFLAGS=-O0 -std=c11 ${VERSION} ${FLAGS_DEBUG}
 #CFLAGS=-O2 -ftree-vectorize -msse2 -ftree-vectorizer-verbose=5 -std=c11 ${VERSION} ${FLAGS_DEBUG}
-CFLAGS=-O3 -std=c11 ${VERSION}
+CFLAGS=-O3 -std=c11 ${VERSION} -DLOGLEVEL=0 #-fopt-info-vec-missed #-fopt-info-loop-optimized -fopt-info-loop-optimized -Wall
 
 srcfiles=$(wildcard src/*.c)
 objects=$(srcfiles:%.c=%.o)
